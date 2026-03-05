@@ -2,13 +2,22 @@
 
 import { useState } from "react";
 
-export default function SearchBox({ onSearch }) {
+type SearchBoxProps = {
+  onSearch: (id: string) => void;
+};
+
+export default function SearchBox({ onSearch }: SearchBoxProps) {
 
   const [id, setId] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!id) return;
+
+    if (!id.trim()) {
+      alert("Please enter IMDb ID");
+      return;
+    }
+
     onSearch(id);
   };
 
@@ -30,5 +39,6 @@ export default function SearchBox({ onSearch }) {
       </button>
 
     </form>
+
   );
 }
